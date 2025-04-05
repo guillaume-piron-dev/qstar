@@ -1,0 +1,12 @@
+# CITATION.cff
+cff-version: 1.2.0
+authors:
+  - family-names: Piron
+    given-names: Guillaume
+    affiliation: Espace de travail de Piron Guillaume
+    orcid: https://orcid.org/0000-0001-2345-6789
+title: Q-STAR: Architecture IA Séquentielle Asynchrone Quantique
+version: 1.0.0
+date-released: 2024-04-01
+license: MIT
+message: "If you use this work, please cite it as below."

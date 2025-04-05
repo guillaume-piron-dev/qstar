@@ -1,0 +1,29 @@
+# deployment/docker-compose.yml
+version: '3.8'
+
+services:
+  qstar-api:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    container_name: qstar_api
+    ports:
+      - "7860:7860"
+    volumes:
+      - ../logs:/app/logs
+      - ../config:/app/config
+    environment:
+      - QSTAR_ENV=production
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+
+  qstar-worker:
+    image: python:3.10-slim
+    container_name: qstar_worker
+    working_dir: /app
+    volumes:
+      - ..:/app
+    command: ["python", "scripts/run.py", "rlhf"]
+    depends_on:
+      - qstar-api
+    restart: on-failure

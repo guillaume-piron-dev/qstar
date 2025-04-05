@@ -1,0 +1,6 @@
+# .coveragerc
+[run]
+omit =
+    */_remote_module_non_scriptable.py
+    */__init__.py
+    */site-packages/*

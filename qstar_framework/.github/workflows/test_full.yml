@@ -1,0 +1,77 @@
+name: Q-STAR CI Full
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  full-ci:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 🔄 Checkout du dépôt
+      uses: actions/checkout@v3
+
+    - name: 🦖 Configuration de Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: 📦 Installation des dépendances (TensorFlow compatible)
+      run: |
+        python -m pip install --upgrade pip
+        pip install ml_dtypes==0.2.0
+        pip install -r requirements.txt --extra-index-url https://download.pytorch.org/whl/cpu
+
+    - name: 🧪 Installation locale du framework Q-STAR
+       env:
+        QSTAR_API_TOKEN: ${{ secrets.QSTAR_API_TOKEN }}
+       run: |
+        pip install -e .
+
+    - name: ✅ Tests unitaires avec Pytest
+      run: |
+        export PYTHONPATH=$PYTHONPATH:$(pwd)
+        pytest tests/
+
+    - name: 🧪 Couverture des tests
+      run: |
+        export PYTHONPATH=$PYTHONPATH:$(pwd)
+        coverage run --rcfile=.coveragerc -m pytest
+        coverage report -m --skip-covered
+
+    - name: 🔐 Définir variables d'environnement
+      run: echo "QSTAR_API_TOKEN=dummy-test-token" >> $GITHUB_ENV
+
+    - name: 🔍 Analyse de code avec Flake8
+      run: |
+        flake8 qstar --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 qstar --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+    - name: 🎨 Vérification de style avec Black
+      run: |
+        black --check qstar
+
+    - name: 🛡️ Analyse de sécurité (Bandit)
+      run: |
+        bandit -r qstar
+
+    - name: 🐳 Build Docker (facultatif)
+      run: docker build -t qstar-test .
+
+    - name: 🧪 Build RLHF Dockerfile
+      run: docker build -f docker/Dockerfile.rl.txt -t qstar-rl .
+
+    - name: 📂 Upload des rapports de couverture
+      uses: actions/upload-artifact@v4
+      with:
+        name: couverture-tests
+        path: .coverage
+
+    - name: 📁 Upload HTML coverage report
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-html
+        path: htmlcov

@@ -1,0 +1,15 @@
+Dockerfile.dev – Environnement local pour Q-STAR
+
+FROM python:3.10-slim
+
+# Créer un répertoire de travail
+WORKDIR /app
+
+# Copie des fichiers du projet
+COPY . /app
+
+# Installation des dépendances
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Activation d’un serveur local ou d’un exemple
+CMD ["make", "run"]

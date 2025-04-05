@@ -1,0 +1,16 @@
+#config/example_rlhf.yaml : exemple de configuration RLHF
+# Place dans config/ ou reinforcement/
+
+"""
+reward:
+  type: composite
+  weights:
+    coherence: 0.4
+    factuality: 0.3
+    relevance: 0.3
+training:
+  epochs: 5
+  batch_size: 16
+  lr: 3e-5
+  model: gpt2
+"""

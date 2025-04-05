@@ -1,0 +1,10 @@
+# config_rl.yaml
+model_name: gpt2
+batch_size: 4
+learning_rate: 1e-5
+log_with: null  # Options: null, "wandb"
+max_prompt_length: 256
+max_response_length: 128
+reward_function: composite_reward
+penalty_on_hallucination: 0.2
+use_qstar_verification: true

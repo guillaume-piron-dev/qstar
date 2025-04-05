@@ -1,0 +1,53 @@
+# Environnements virtuels
+.venv/
+env/
+env.bak/
+venv/
+__pycache__/
+
+# Build / Distribution
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
+pip-wheel-metadata/
+*.manifest
+*.spec
+
+# Caches
+.cache/
+*.log
+
+# Fichiers Python compilés
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.so
+*.dll
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Notebooks auto-saves
+.ipynb_checkpoints/
+
+# Scripts générés
+*.bat
+*.sh
+
+# Tests résultats
+htmlcov/
+.coverage
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+
+# PyInstaller
+output/

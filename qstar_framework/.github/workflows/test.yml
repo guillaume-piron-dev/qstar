@@ -1,0 +1,55 @@
+name: Q-STAR CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 🔄 Checkout du dépôt
+      uses: actions/checkout@v3
+
+    - name: 🐍 Configuration de Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: 📦 Installation des dépendances (TensorFlow compatible)
+      run: |
+        python -m pip install --upgrade pip
+        pip install ml_dtypes==0.2.0
+        pip install -r requirements.txt --extra-index-url https://download.pytorch.org/whl/cpu
+        pip install black flake8 pytest coverage
+
+    - name: 🧪 Installation locale du framework Q-STAR
+      run: |
+        pip install -e .
+
+    - name: ✅ Tests unitaires avec Pytest
+      run: |
+        export PYTHONPATH=$PYTHONPATH:$(pwd)
+        pytest tests/
+
+    - name: 🧪 Couverture des tests
+      run: |
+        export PYTHONPATH=$PYTHONPATH:$(pwd)
+        coverage run -m pytest
+        coverage report -m
+
+    - name: 🔍 Analyse de code avec Flake8
+      run: |
+        flake8 qstar --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 qstar --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+    - name: 🎨 Vérification du style avec Black
+      run: |
+        black --check qstar
+
+    # Optionnel : Docker
+    # - name: 🐳 Build Docker image (optionnel)
+    #   run: docker build -t qstar-test .

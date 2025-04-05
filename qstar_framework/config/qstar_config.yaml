@@ -1,0 +1,32 @@
+# config/qstar_config.yaml
+
+# Configuration globale Q-STAR
+
+runtime:
+  async_mode: true
+  fallback_cpu: true
+  default_device: "auto"  # auto | cpu | cuda
+
+model:
+  default_model: "distilgpt2"
+  precision: "fp32"
+  backend: "torch"  # torch | onnx | jax | tf
+  max_length: 128
+
+multimodal:
+  enable_audio: true
+  enable_image: true
+  enable_text: true
+
+logging:
+  level: "info"  # debug | info | warning | error
+  save_logs: true
+  export_format: ["json", "txt"]
+
+hardware:
+  detect_on_startup: true
+  profile_path: "profile/hardware_profiles.yaml"
+
+security:
+  sandbox_mode: true
+  scan_plugins: true

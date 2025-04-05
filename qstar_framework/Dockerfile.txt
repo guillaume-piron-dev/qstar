@@ -1,0 +1,11 @@
+# Dockerfile
+FROM python:3.10-slim
+
+WORKDIR /app
+COPY . /app
+
+RUN apt update && apt install -y git && \
+    pip install --no-cache-dir -r requirements.txt && \
+    pip install gradio transformers torch torchvision torchaudio datasets onnxruntime
+
+CMD ["python", "qstar_cli.py", "--mode=core", "--input=Bonjour"]

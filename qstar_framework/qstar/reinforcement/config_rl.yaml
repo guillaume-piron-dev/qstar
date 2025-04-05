@@ -1,0 +1,6 @@
+model_name: gpt2
+batch_size: 4
+learning_rate: 1e-5
+reward_function: composite_reward
+penalty_on_hallucination: 0.2
+use_qstar_verification: true

@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  qstar-rlhf:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.rl
+    container_name: qstar_rlhf
+    volumes:
+      - ../:/app
+    working_dir: /app
+    command: python qstar/reinforcement/train_rlhf.py
+
+  qstar-api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.api
+    container_name: qstar_api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - qstar-rlhf
+    command: python api/app_fastapi.py
+
+  qstar-vision:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.vision
+    container_name: qstar_vision
+    command: python qstar/models/vision/inference.py

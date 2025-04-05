@@ -1,0 +1,38 @@
+# profile/hardware_profiles.yaml
+
+# Profils matériels typiques pour adaptation dynamique
+
+laptop_standard:
+  min_ram_gb: 8
+  device: "cpu"
+  batch_size: 1
+  precision: "fp32"
+  backend: "torch"
+
+edge_device:
+  min_ram_gb: 2
+  device: "cpu"
+  batch_size: 1
+  precision: "int8"
+  backend: "onnx"
+
+gpu_workstation:
+  min_ram_gb: 32
+  device: "cuda"
+  batch_size: 8
+  precision: "fp16"
+  backend: "torch"
+
+cloud_server:
+  min_ram_gb: 64
+  device: "cuda"
+  batch_size: 16
+  precision: "bf16"
+  backend: "jax"
+
+raspberry_pi:
+  min_ram_gb: 1
+  device: "cpu"
+  batch_size: 1
+  precision: "int8"
+  backend: "onnx"

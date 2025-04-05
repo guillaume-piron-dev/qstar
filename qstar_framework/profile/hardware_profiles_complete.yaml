@@ -1,0 +1,52 @@
+# profile/hardware_profiles.yaml
+# Profils matériels types pour calibrage automatique Q-STAR
+
+raspberry_pi:
+  description: "ARM device (e.g., Raspberry Pi 4)"
+  cpu: ARMv8
+  ram_gb: 2
+  gpu: false
+  enable_onnx: true
+  batch_size: 1
+  precision: float32
+
+edge_mobile:
+  description: "Appareils mobiles ou edge computing légers"
+  cpu: Cortex-A / Snapdragon
+  ram_gb: 4
+  gpu: false
+  enable_onnx: true
+  batch_size: 2
+  precision: float16
+
+workstation:
+  description: "Ordinateur personnel ou station avec GPU"
+  cpu: x86_64
+  ram_gb: 16
+  gpu: true
+  enable_onnx: true
+  enable_cuda: true
+  batch_size: 8
+  precision: float16
+
+server_gpu:
+  description: "Nœud serveur avec GPU professionnel (ex: A100)"
+  cpu: Xeon / AMD EPYC
+  ram_gb: 128
+  gpu: true
+  enable_cuda: true
+  enable_jax: true
+  enable_tensorflow: true
+  batch_size: 32
+  precision: bfloat16
+
+research_hpc:
+  description: "TPU / Supercalculateur / Recherche"
+  cpu: TPU or Cloud Engine
+  ram_gb: 512
+  gpu: true
+  enable_tpu: true
+  enable_jax: true
+  enable_tensorflow: true
+  batch_size: 64
+  precision: bfloat16

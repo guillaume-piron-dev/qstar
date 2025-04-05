@@ -1,0 +1,15 @@
+#profile/hardware_profiles.yaml : adaptation auto
+
+"""
+profiles:
+  - name: raspberry_pi
+    cpu: ARM
+    ram_gb: 2
+    acceleration: none
+
+  - name: datacenter_gpu
+    cpu: Xeon
+    ram_gb: 128
+    gpu: A100
+    acceleration: cuda
+"""

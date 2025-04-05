@@ -1,0 +1,24 @@
+# Dockerfile pour l'entraînement RLHF avec TRL
+
+FROM python:3.10-slim
+
+# Préparation système
+RUN apt-get update && apt-get install -y \
+    git \
+    ffmpeg \
+    libsndfile1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Dépendances Python
+COPY requirements.txt /app/requirements.txt
+RUN pip install --upgrade pip
+RUN pip install ml_dtypes==0.2.0 \
+ && pip install -r /app/requirements.txt --extra-index-url https://download.pytorch.org/whl/cpu
+
+# Installation du framework Q-STAR
+WORKDIR /app
+COPY . /app
+RUN pip install -e .
+
+# Commande par défaut
+CMD ["python", "train/train_llm.py"]
